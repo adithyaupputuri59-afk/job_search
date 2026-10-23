@@ -1,0 +1,217 @@
+{
+  "info": {
+    "_postman_id": "c62b5bf4-8d99-4a0b-97e3-07cfbe129999",
+    "name": "Job Search - Bulk Excel Upload & Management",
+    "description": "Collection for testing bulk Excel job uploads, template download, and jobs API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Download Sample Excel Template",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/jobs/sample-excel/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "jobs",
+            "sample-excel",
+            ""
+          ]
+        },
+        "description": "Use the arrow next to the 'Send' button in Postman and select 'Send and Download' to save the sample Excel template file directly to your computer."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Bulk Upload Jobs via Excel File (.xlsx)",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "Aditya",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "<your_password>",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "description": "Select sample_jobs_template.xlsx or jobs.xlsx"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/jobs/upload-excel/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "jobs",
+            "upload-excel",
+            ""
+          ]
+        },
+        "description": "Uploads an Excel file (.xlsx or .xls) containing job listings. Requires recruiter credentials (staff user)."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Bulk Upload Jobs via JSON Payload",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "Aditya",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "<your_password>",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\n    \"title\": \"Python Developer\",\n    \"company\": \"TCS\",\n    \"location\": \"Hyderabad\",\n    \"salary\": 40000,\n    \"description\": \"Develop Python applications and maintain backend services.\",\n    \"job_type\": \"Full-time\",\n    \"experience\": \"Fresher\"\n  },\n  {\n    \"title\": \"SQL Developer\",\n    \"company\": \"Infosys\",\n    \"location\": \"Bangalore\",\n    \"salary\": 35000,\n    \"description\": \"Write SQL queries, manage databases, and generate reports.\",\n    \"job_type\": \"Full-time\",\n    \"experience\": \"0-1 years\"\n  },\n  {\n    \"title\": \"Django Developer\",\n    \"company\": \"Wipro\",\n    \"location\": \"Chennai\",\n    \"salary\": 45000,\n    \"description\": \"Build REST APIs and backend applications using Django.\",\n    \"job_type\": \"Full-time\",\n    \"experience\": \"Fresher\"\n  }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/jobs/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "jobs",
+            ""
+          ]
+        },
+        "description": "Bulk creates jobs by sending a JSON array of job objects."
+      },
+      "response": []
+    },
+    {
+      "name": "4. List All Jobs (Verify Upload)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/jobs/?page=1&page_size=10",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "jobs",
+            ""
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "page_size",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Retrieve paginated list of all jobs."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Delete All Jobs (Reset Data)",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "Aditya",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "<your_password>",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/jobs/delete-all/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "jobs",
+            "delete-all",
+            ""
+          ]
+        },
+        "description": "Delete all jobs in database. Recruiter only."
+      },
+      "response": []
+    }
+  ]
+}
